@@ -38,11 +38,6 @@ public class HelloController {
     public UserDTO toIndex(HttpServletRequest request, Model model){
         int userId = Integer.parseInt(request.getParameter("id"));
         UserDTO user = this.userService.getUserById(userId);
-        
-        HashMap<String, Object> maps=new HashMap<String, Object>();
-        maps.put(user.getId().toString(), user.getUserName());
-        maps.put(user.getId()+"1","容培淼。");
-        redisUtil.hmset(user.getId().toString(), maps);
         return user;
     }
     
