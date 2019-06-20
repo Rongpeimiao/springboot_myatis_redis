@@ -40,6 +40,7 @@ public class DemoApplicationTests {
 	}
 	@Test
 	public void testRedisSources(){
+		 //测试Redis
 		  String testString =(String) redisUtil.hget("20","20");
 		  System.out.println(testString);
 		  Map<Object, Object> hmap= redisUtil.hmget("20");
@@ -53,6 +54,8 @@ public class DemoApplicationTests {
 		  System.out.println(redisUtil.get("21"));
 		  //redisUtil.hset("20","202","hset");
 		  //redisUtil.sSet("sSet",1,2,3,4);
+		  
+		  //测试Service
 		  System.out.println( userService.getUserById(20).getUserName());
 	}
 }
