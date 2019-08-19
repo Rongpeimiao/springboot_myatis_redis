@@ -1,5 +1,6 @@
 package com.springboot.rong.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,10 +9,14 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.springboot.rong.dao.UserDao;
 import com.springboot.rong.entity.UserDTO;
 import com.springboot.rong.redis.RedisUtil;
 import com.springboot.rong.service.UserService;
+import com.sun.tools.javac.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -52,6 +57,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return result;
+	}
+
+	@Override
+	public ArrayList<UserDTO> selectUserDTOList(Map<String, Object> maps) {
+		
+		
+		
+		
+		 return userDao.selectUserDTOList(maps);
 	}
 
 

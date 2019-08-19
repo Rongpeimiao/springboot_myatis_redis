@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.Page;
 import com.springboot.rong.entity.UserDTO;
 import com.springboot.rong.redis.RedisUtil;
 import com.springboot.rong.service.UserService;
@@ -50,8 +51,8 @@ public class HelloController {
 	*/   
     
     @RequestMapping("/Restful/{id}")
-    public UserDTO Restful(@PathVariable("id") Integer iid, Model model){
-        UserDTO user = this.userService.getUserById(iid);
+    public UserDTO Restful(@PathVariable("id") Integer id, Model model){
+        UserDTO user = this.userService.getUserById(id);
         return user;
     }
   

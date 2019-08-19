@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 	/**
@@ -351,6 +352,31 @@ import org.springframework.util.CollectionUtils;
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            return 0;
+	        }
+	    }
+	    // ===============================(sorted set) =================================
+	    /**
+	     * 将数据放入sorted set缓存
+	     * @param key 键
+	     * @param values 值 可以是多个
+	     * @return 成功个数
+	     */
+	    public Boolean sZSet(String key, Object values,double score) {
+	        try {
+	            return redisTemplate.opsForZSet().add(key, values,score);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    
+	    public Set<Object> gZSet(String key,long  start,long  end ) {
+	        try {
+	        	  Set<Object> gZSet=  redisTemplate.opsForZSet().range(key, start, end);
+	            return gZSet;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return null;
 	        }
 	    }
 	    // ===============================list=================================

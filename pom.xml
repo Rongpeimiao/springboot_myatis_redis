@@ -59,14 +59,18 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         
-        <!-- mybatis -->
+        <!-- mybatis 增加 /src/main/resources/mapper 的xml文件 与com.springboot.rong.dao映射;-->
+        <!-- application.yml配置路径typeAliasesPackage与mapperLocations -->
+        <!--   typeAliasesPackage: com.springboot.rong.entity
+  				mapperLocations: classpath:mapper/*.xml
+  		 -->
 		<dependency>
 		    <groupId>org.mybatis.spring.boot</groupId>
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
 		    <version>1.1.1</version>
 		</dependency>
 		
-        <!-- mysql -->
+        <!-- mysql 增加配置文件 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -81,14 +85,20 @@
             <version>1.1.0</version>
         </dependency>
         
-        <!-- redis -->
+        <!-- redis 增加com.springboot.rong.redis 与相应的java类； 增加application.properties：Redis数据库索引-->
 	   <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-	</dependencies>
+        <!-- 增加pagehelper ;增加application.yml的#pagehelper分页插件配置 ，使用 PageHelper.startPage(page,pageSize);主意version号 -->
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper-spring-boot-starter</artifactId>
+		    <version>1.2.5</version>
+		</dependency>
+	  </dependencies>
 
-
+        
 	<build>
 		<plugins>
 			<plugin>

@@ -16,6 +16,14 @@
         from user_tab
         where id = #{id,jdbcType=INTEGER}
     </select>
+     <select id="selectUserDTOList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+      select
+      <include refid="Base_Column_List" />
+      from user_tab  where 1=1
+        <if test="id != null" >
+             and  #{id,jdbcType=INTEGER}
+       </if>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from user_tab
         where id = #{id,jdbcType=INTEGER}

@@ -1,8 +1,12 @@
 package com.springboot.rong.dao;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.springboot.rong.entity.UserDTO;
+
 @Mapper
 public interface UserDao {
 	int deleteByPrimaryKey(Integer id);
@@ -16,4 +20,6 @@ public interface UserDao {
     int updateByPrimaryKeySelective(UserDTO record);
 
     int updateByPrimaryKey(UserDTO record);
+    
+    ArrayList<UserDTO> selectUserDTOList(Map<String,Object> maps);
 }
