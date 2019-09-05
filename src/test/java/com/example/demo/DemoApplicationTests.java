@@ -5,24 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.springboot.rong.DemoApplication;
 import com.springboot.rong.entity.UserDTO;
-import com.springboot.rong.redis.RedisUtil;
 import com.springboot.rong.service.UserService;
+import com.springboot.rong.until.redis.RedisUtil;
 import com.sun.tools.javac.util.List;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,7 +25,7 @@ import com.github.pagehelper.PageInfo;
 @EnableAutoConfiguration
 public class DemoApplicationTests {
 	 @Autowired
-	  UserService userService;
+	 UserService userService;
 	
 	 @Autowired
 	  RedisUtil redisUtil;
@@ -70,21 +65,33 @@ public class DemoApplicationTests {
 		  
 		  //测试Service
 		 // System.out.println(userService.getUserById(20).getUserName());
+		  //ZSet 操作
+		/*  System.out.println(redisUtil.gZSet("111",2,6)); 
+		  Set<Object>  gZSet=  redisUtil.gZSet("111",2,6);
+		  Object[] arr;
+		  arr=gZSet.toArray();
+		  for(int i=0;i<arr.length;i++){
+			  System.out.println(arr[i] instanceof HashMap); 
+		  }
+		  HashMap hm=(HashMap) arr[2];
+		 System.out.println(hm.get("201")); */
+		  //list操作
 		  
-		  System.out.println(redisUtil.gZSet("111",3,6)); 
-		  List<Object> gZSet=  (List<Object>) redisUtil.gZSet("111",3,6);
-		 
-		 System.out.println(gZSet.get(0)); 
+		  System.out.println(redisUtil.lGetListSize("userList"));
+		  
 	}
 	
 	@Test
 	public void testInertUser(){
+		ArrayList<UserDTO> listu=new ArrayList<UserDTO>();
 		for(int i=22;i<25;i++){
 			UserDTO user=new UserDTO();
 			user.setId(i+1);
 			user.setUserName("rong"+i+1);
 			user.setPassword("123");
 			userService.addUser(user);
+			listu.add(user);
 		}
+		 redisUtil.lSet("userList",listu,10000);
 	}
 }

@@ -22,4 +22,7 @@ public interface UserDao {
     int updateByPrimaryKey(UserDTO record);
     
     ArrayList<UserDTO> selectUserDTOList(Map<String,Object> maps);
+    
+    //通过username查询用户
+   // SelfUserDetails getUser(String username);
 }

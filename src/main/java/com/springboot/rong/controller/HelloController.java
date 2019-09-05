@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.Page;
 import com.springboot.rong.entity.UserDTO;
-import com.springboot.rong.redis.RedisUtil;
+import com.springboot.rong.until.jsonResult.CheckObjectIsNullUtils;
+import com.springboot.rong.until.jsonResult.JsonUtil;
+import com.springboot.rong.until.jsonResult.Result;
+import com.springboot.rong.until.jsonResult.ResultEnum;
+import com.springboot.rong.until.jsonResult.ResultVO;
+import com.springboot.rong.until.redis.RedisUtil;
 import com.springboot.rong.service.UserService;
 import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
@@ -29,6 +34,9 @@ public class HelloController {
 	
 	 @Autowired
 	 private RedisUtil redisUtil;
+	
+	 @Autowired
+	 private CheckObjectIsNullUtils checkUtils;
 	 
     @RequestMapping("/hello")
     public String hello() {
@@ -41,7 +49,18 @@ public class HelloController {
         UserDTO user = this.userService.getUserById(userId);
         return user;
     }
-    
+    @RequestMapping("/showUserMap")
+    public  HashMap<String, Object> showUserMap(HttpServletRequest request, Model model){
+        int userId = Integer.parseInt(request.getParameter("id"));
+        UserDTO user = this.userService.getUserById(userId);
+        return checkUtils.getObjCheckIsNullResultMap(user);
+    }
+    @RequestMapping("/showUserResult")
+    public Result showUserResult(HttpServletRequest request, Model model){
+        int userId = Integer.parseInt(request.getParameter("id"));
+        UserDTO user = this.userService.getUserById(userId);
+        return checkUtils.getObjCheckIsNullResult(user);
+    }
 	/*Restful就是一个资源定位及资源操作的风格，不是标准也不是协议，只是一种风格，是对http协议的诠释。
 	资源定位：互联网所有的事物都是资源，要求url中没有动词，只有名词，没有参数。url请求的风格就像这样：
 	http://blog.csdn.net/eson_15/article/details/51743514

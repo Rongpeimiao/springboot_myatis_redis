@@ -1,7 +1,6 @@
 package com.springboot.rong.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -9,14 +8,10 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.springboot.rong.dao.UserDao;
 import com.springboot.rong.entity.UserDTO;
-import com.springboot.rong.redis.RedisUtil;
+import com.springboot.rong.until.redis.RedisUtil;
 import com.springboot.rong.service.UserService;
-import com.sun.tools.javac.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -30,14 +25,27 @@ public class UserServiceImpl implements UserService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserDTO getUserById(int userId) {
+		
 		UserDTO udto=new UserDTO();
-	    String name= (String) redisUtil.hget(String.valueOf(userId) ,String.valueOf(userId) );
-        if(!name.isEmpty()){
-        	udto.setId(2011);
-        	udto.setUserName(name);
-        	return udto;
-        }
-        udto= userDao.selectByPrimaryKey(userId);
+		try {
+			String name= (String) redisUtil.hget(String.valueOf(userId) ,String.valueOf(userId) );
+			if(null!=name&&!name.isEmpty()){
+				udto.setId(2011);
+				udto.setUserName(name);
+				return udto;
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("redi查询失败！");
+		}
+		try {
+			udto= userDao.selectByPrimaryKey(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("mysql数据库查询失败！");
+		}
 		return udto;
 	}
 
@@ -61,11 +69,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ArrayList<UserDTO> selectUserDTOList(Map<String, Object> maps) {
+
 		
-		
-		
-		
-		 return userDao.selectUserDTOList(maps);
+		return userDao.selectUserDTOList(maps);
 	}
 
 

@@ -1,7 +1,9 @@
 package com.springboot.rong.entity;
 
-public class UserDTO {
-	 private Integer id;
+
+
+public class UserDTO   {
+	    private Integer id;
 
 	    private String userName;
 
